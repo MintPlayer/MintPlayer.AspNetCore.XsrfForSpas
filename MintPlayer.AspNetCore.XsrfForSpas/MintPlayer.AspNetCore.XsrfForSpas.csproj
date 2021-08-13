@@ -1,7 +1,21 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Company>MintPlayer</Company>
+    <Authors>Pieterjan De Clippel</Authors>
+    <Version>1.0.1</Version>
+    <Description>This package contains an ASP.NET Core middleware that manages CSRF for single-page applications.</Description>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/MintPlayer/MintPlayer.AspNetCore.XsrfForSpas</RepositoryUrl>
+    <RepositoryType>Git</RepositoryType>
+    <PackageId>MintPlayer.AspNetCore.XsrfForSpas</PackageId>
+    <Product>MintPlayer.AspNetCore.XsrfForSpas</Product>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <PackageTags>XSRF, Single-page application</PackageTags>
+    <PackageProjectUrl>https://github.com/MintPlayer/MintPlayer.AspNetCore.XsrfForSpas/tree/master/MintPlayer.AspNetCore.XsrfForSpas</PackageProjectUrl>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
