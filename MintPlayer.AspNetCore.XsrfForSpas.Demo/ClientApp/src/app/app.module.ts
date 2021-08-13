@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule, HttpClientXsrfModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
@@ -21,6 +21,10 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
+    HttpClientXsrfModule.withOptions({
+      cookieName: 'XSRF-TOKEN',
+      headerName: 'X-XSRF-TOKEN'
+    }),
     FormsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
@@ -28,7 +32,22 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
       { path: 'fetch-data', component: FetchDataComponent },
     ])
   ],
-  providers: [],
+  providers: [{
+    provide: 'BASE_URL',
+    useFactory: () => {
+      let baseHref = document.getElementsByTagName('base')[0].href;
+
+      // Trim the scheme
+      baseHref = baseHref.replace(/^https?\:\/\//gi, '//');
+
+      // Slice the trailing /
+      if (baseHref.endsWith('/')) {
+        baseHref = baseHref.slice(0, -1);
+      }
+
+      return baseHref;
+    }
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

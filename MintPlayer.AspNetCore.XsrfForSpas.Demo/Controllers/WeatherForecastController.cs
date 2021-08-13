@@ -35,5 +35,13 @@ namespace MintPlayer.AspNetCore.XsrfForSpas.Demo.Controllers
             })
             .ToArray();
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateWeatherForecast()
+        {
+            Console.WriteLine("Creating Weather Forecast");
+            return Ok();
+        }
     }
 }
