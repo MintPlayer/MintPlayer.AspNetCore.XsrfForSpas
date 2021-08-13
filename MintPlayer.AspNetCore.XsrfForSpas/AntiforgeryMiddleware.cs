@@ -19,13 +19,17 @@ namespace MintPlayer.AspNetCore.XsrfForSpas
 
         public async Task Invoke(HttpContext httpContext)
         {
-            await next(httpContext);
+            httpContext.Response.OnStarting(async (state) =>
+            {
+                var context = (HttpContext)state;
+                //if (string.Equals(httpContext.Request.Path.Value, "/", StringComparison.OrdinalIgnoreCase))
+                //{
+                    var tokens = antiforgery.GetAndStoreTokens(httpContext);
+                    httpContext.Response.Cookies.Append("XSRF-TOKEN", tokens.RequestToken, new CookieOptions() { Path = "/", HttpOnly = false });
+                //}
+            }, httpContext);
 
-            //if (string.Equals(httpContext.Request.Path.Value, "/", StringComparison.OrdinalIgnoreCase))
-            //{
-            var tokens = antiforgery.GetAndStoreTokens(httpContext);
-            httpContext.Response.Cookies.Append("XSRF-TOKEN", tokens.RequestToken, new CookieOptions() { Path = "/", HttpOnly = false });
-            //}
+            await next(httpContext);
         }
     }
 
